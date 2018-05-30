@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Screen Capture Share File</title>
+    <meta name="description" content="A file share by Screen Capture, click the url to view the file.">
+    <meta property="og:url" content="https://local.api.screencapture.ntc.zone/s/B" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="I have shared file with Screen Capture" />
+    <meta property="og:description" content="A file share by Screen Capture, click the url to view the file." />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/share.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="wrapper">
+            <a class="navbar-brand float-left" href="#"><img src="images/logo.png" alt="Cyclonis Screen Capture" /></a>
+            <p class="float-right">Share file to Google Plus</p>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="wrapper box-shadow">
+            <div class="row align-items-center img-panel">
+                <div class="col text-center my-3">
+                    <a href="#">
+                    <img src="images/test.jpg" alt="">
+                </a>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="message">Share Message</label>
+                <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+            </div>
+            <div class="row icon-panel">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-primary" type="submit">Post to Google Plus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Copy Share Link</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Share URL</h5>
+                    <div class="input-group mb-3">
+                        <input id="shareUrlInput" type="text" class="form-control" value="https://local.api.screencapture.ntc.zone/s/B" readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="copyBtn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/js/social-share.min.js"></script>
+    <script>
+        $(function() {
+            //share url
+            var copyBtn = $('#copyBtn');
+            copyBtn.click(function() {
+                var shareInput = $('#shareUrlInput');
+                shareInput.select();
+                document.execCommand('Copy');
+            });
+
+            //download
+            var downloadBtn = $('#downloadBtn');
+            downloadBtn.click(function() {
+                var downloadUrl = "https://local.api.screencapture.ntc.zone/s/B/download";
+                $.get(downloadUrl, function(data) {
+                        if (data && data.hasOwnProperty('link')) {
+                            $.ajax({
+                                url: data.link,
+                                method: 'GET',
+                                xhrFields: {
+                                    responseType: 'blob'
+                                },
+                                success: function(data) {
+                                    var a = document.createElement('a');
+                                    var url = window.URL.createObjectURL(data);
+                                    a.href = url;
+                                    a.download = 'test.jpg';
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                }
+                            });
+                        }
+                    })
+                    .fail(function(jqXHR) {
+                        var error = jqXHR.responseJSON;
+                        if (error && error.hasOwnProperty('message')) {
+                            alert(error.message);
+                        }
+                    })
+            });
+        })
+    </script>
+</body>
+
+</html>
