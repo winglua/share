@@ -79,6 +79,7 @@ body {
 
 .img-panel {
     margin-top: -80px;
+    min-height: 480px;
 }
 
 .img-panel img {
