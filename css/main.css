@@ -1,8 +1,6 @@
 body {
-
     background-color: #f5f5f5;
-   color: #333;
-
+    color: #333;
 }
 
 .navbar-brand {}
@@ -12,17 +10,42 @@ body {
 }
 
 .navbar {
-
     color: #fff;
-    background-color: #00a088;
+    background-color: #04A699;
     width: auto;
     height: 200px;
     z-index: 0;
 }
 
-.navbar p.float-right {
-    margin-top: 30px;
-    font-size: 24px;
+.navbar .float-right {
+    margin-top: 8px;
+    background-color: #fff;
+    padding: 8px 24px 8px 10px;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.float-right dl,
+.float-right embed {
+    display: inline-block;
+}
+
+.float-right embed {
+
+    margin: 0 8px 0 0;
+    vertical-align: middle;
+}
+
+.float-right dl {
+    font-size: 14px;
+    color: #222;
+    line-height: 16px;
+    vertical-align: top;
+    margin-top: 4px;
+}
+
+.float-right dt {
+    font-size: 40px;
 }
 
 .wrapper {
@@ -49,7 +72,8 @@ body {
 .img-panel,
 .icon-panel,
 .form-group,
-.row {
+.row,
+.alert {
     margin: 0;
 }
 
@@ -76,4 +100,8 @@ body {
 
 .form-group {
     padding: 10px 20px;
+}
+
+.btn-download:hover dl {
+    color: #04A699;
 }
